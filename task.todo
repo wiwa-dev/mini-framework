@@ -1,0 +1,86 @@
+MINI-FRAMEWORK:
+    Structure:
+        mini-framework/
+        │ 
+        ├── doc
+        │   ├── AUDIT.md
+        │   └── subject.md
+        ├── src
+        │   ├── core
+        │   │   ├── doc
+        │   │   │   ├── AUDIT.md
+        │   │   │   └── subject.md
+        │   │   ├── dom.js
+        │   │   ├── events.js
+        │   │   ├── router.js
+        │   │   ├── state.js
+        │   │   └── utils
+        │   │       └── helpers.js
+        │   └── your-project-name
+        │       ├── app.js
+        │       ├── components
+        │       │   ├── footer.js
+        │       │   ├── TodoItem.js
+        │       │   ├── Todolist.js
+        |       |   └── tooltip.js
+        │       ├── index.html
+        │       └── styles.css
+        ├── structure.sh
+        └── task.todo
+    
+    Require:
+        DOM Manipulation: 
+            ☐ Implement a method to abstract the DOM structure. 
+            ☐ Support creation, updating, and deletion of elements.
+            ☐ Handle attributes, events, and children for each element. 
+            ☐ Use Virtual DOM, Data Binding, or Templating as needed. 
+            
+        Implement Routing: 
+            ☐ Develop a simple routing system to synchronize app state with the URL.
+            ☐ Allow URL changes through user actions.
+
+        Handle State Management: 
+            ☐ Implement a way to manage the application state.
+            ☐ Ensure state is reachable and updatable by multiple pages.
+
+        Custom Event Handling: 
+            ☐ Implement a custom way to handle user-triggered events.
+            ☐ Ensure it's different from the default `addEventListener()` method.
+
+        Setup todoMVC Project: 
+            ☐ Create a functional copy of the todoMVC project using the custom framework.
+            ☐ Ensure all elements (IDs, classes) are present as in the examples.
+            ☐ Include features such as adding, checking, unchecking, and removing to-dos.
+
+        Create Documentation File: 
+            ☐ Create a markdown file for documentation.
+            ☐ Include a top-level overview of the framework's features.
+            Provide explanations and code examples on:
+                ☐ Creating an element.
+                ☐ Adding attributes to an element.
+                ☐ Creating an event.
+                ☐ Nesting elements.
+            ☐ Include an explanation of how the framework works. 
+
+        Audit Tests:
+            ☐ Verify the framework doesn't use other high-level libraries/frameworks.
+            ☐ Ensure the documentation explains all features with examples.
+            ☐ Compare the todoMVC project with standard examples:
+                ☐ Check for all elements.
+                ☐ Verify class and ID correspondences.
+                ☐ Test adding, checking, unchecking, and removing to-dos.
+                ☐ Ensure footer appears correctly.
+                ☐ Test Active and Completed filters.
+                ☐ Verify Clear Completed button functionality.
+                ☐ Check URL changes on filter clicks.
+                ☐ Verify to-do counter accuracy.
+                ☐ Test double-click edit functionality.
+
+
+    
+
+//legende
+   ☐ ctrl + Enter (initiliser une tâche)
+   ☐ @started(24-05-25 13:45) ctrl + Enter / alt + s (pour demarrer une tâche)
+   ✔ @done(24-05-25 13:46) alt + D (pour terminer une tâche)
+   ✘ @cancelled(24-05-25 13:47) (pour annuler une tâche)
