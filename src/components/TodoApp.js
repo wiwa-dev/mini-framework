@@ -5,7 +5,7 @@ import { createElement } from '../core/dom.js';
 
 
 export default function TodoApp() {
-    return createElement('section', { class: 'todoapp' },
+    return createElement('section', { class: 'todoapp'},
         TodoHeader(),
         TodoMain(),
         TodoFooter()

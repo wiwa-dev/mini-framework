@@ -1,7 +1,7 @@
 import { todos, update } from '../core/state.js';
 import { createElement } from '../core/dom.js';
-import { EventEditLabel ,EventToggle,EventRemoveTodo} from '../app.js';
-import { activeSelect,UpdateFilter, allSelect, completedSelect, All } from '../components/TodoFooter.js';
+import { event } from '../app.js';
+import { UpdateFilter, All } from '../components/TodoFooter.js';
 
 
 export default function TodoItem(todo) {
@@ -9,7 +9,6 @@ export default function TodoItem(todo) {
     const inputAttributes = {
         class: 'toggle',
         type: 'checkbox',
-        id: `check${todo.id}`
     };
 
     if (todo.completed) {
@@ -17,103 +16,92 @@ export default function TodoItem(todo) {
     }
 
     return createElement('li', {
-        id: todo.id,
+        "data-id": todo.id,
         class: todo.completed ? 'completed' : '',
-        style: !todo.display ? 'display:none;':''
     },
-        createElement('div', { class: 'view',id:`view${todo.id}` },
+        createElement('div', { class: 'view' },
             createElement('input',
                 inputAttributes
             ),
-            createElement('label', {id:`label${todo.id}`}, todo.text),
+            createElement('label', {}, todo.text),
             createElement('button', {
-                class: 'destroy',
-                id:`button${todo.id}`,
-                // onclick: () => removeTodo(index)
+                class: 'destroy'
             })
         ),
-        createElement('input',
-            {class:"edit",type:'text',id:`input${todo.id}`},
-        ),
+
     );
 }
 
 
 
 function toggleComplete(todo) {
-    todo.completed = !todo.completed;    
+    todo.completed = !todo.completed;
     UpdateFilter()
 }
 //fonction qui lance l'evenment completed des todos pour mark les todo a completed
-export function eventToggle(todo){
-    EventToggle.on('change', `#check${todo.id}`,  (e)=> { toggleComplete(todo) })
+export function eventToggle(todo) {
+    // let test = document.que
+    let toggle = document.querySelector(`li[data-id="${todo.id}"] .view .toggle`)
+
+    event.on('change', toggle, (e) => { toggleComplete(todo) })
 }
 
 
 
 // Fonction pour supprimer un todo
 export function removeTodo(todo) {
-    todos.forEach((t,i)=>{ if(t.id == todo.id) todos.splice(i,1) })
-    if (todos.length == 0){
+    todos.forEach((t, i) => { if (t.id == todo.id) todos.splice(i, 1) })
+    if (todos.length == 0) {
         All()
         return
-    }  
+    }
     update()
 }
 // Event pour supprimer todo
-export function eventRemoveTodo(todo){
- EventRemoveTodo.on('click',`#button${todo.id}`,(e)=> removeTodo(todo))
+export function eventRemoveTodo(todo) {
+    let destroy = document.querySelector(`li[data-id="${todo.id}"] .view .destroy`);
+    event.on('click', destroy, (e) => removeTodo(todo))
 }
 
 
 
-export function evenEditLabel(todo){
-    
-    EventEditLabel.on('dblclick',`#label${todo.id}`,(e)=>{
-        let view = document.getElementById(`view${todo.id}`)
-        let li = document.getElementById(`${todo.id}`)
+export function evenEditLabel(todo) {
+    let label = document.querySelector(`li[data-id="${todo.id}"] .view label`);
 
-        view.style.display = 'none'
+    event.on('dblclick', label, (e) => {
+        let li = document.querySelector(`li[data-id="${todo.id}"]`)
         li.classList.add('editing')
         let myLabel = e.target
-        const input = document.getElementById(`input${todo.id}`)
-        input.style.display = 'inline'
+        let input = createElement('input', { class: "edit" }).render()
+        li.appendChild(input)
         input.value = myLabel.textContent
+
         input.focus()
-        
+
         const handleKeypress = (e) => {
             if (e.key === 'Enter') {
                 myLabel.textContent = input.value;
-                todos[todo.id].text = input.value;
-                input.style.display = 'none';
-                view.style.display = 'block';
-                input.removeEventListener('keypress', handleKeypress); // Detach keypress event
+                todo.text = input.value;
+                li.innerHTML = ''
+                UpdateFilter()
+                event.off('keypress', input, handleKeypress); // Detach keypress event
             }
         };
 
         const handleBlur = (e) => {
             myLabel.textContent = input.value;
-            todos[todo.id].text = input.value;
-            input.style.display = 'none';
-            view.style.display = 'block';
-            input.removeEventListener('blur', handleBlur); // Detach blur event
+            todo.text = input.value
+            li.innerHTML = ''
+            UpdateFilter()
+            event.off('blur', input, handleBlur); // Detach blur event
         };
 
         // Ajouter les écouteurs d'événements
-        input.addEventListener('keypress', handleKeypress);
-        input.addEventListener('blur', handleBlur);
-       
-})
+        event.on('keypress', input, handleKeypress)
+        event.on('blur', input, handleBlur);
+
+    })
 }
-
-
-// function RemoveListener(id){
-//     let document.
-// }
-// document.addEventListener('DOMContentLoaded', () => {
-//     console.log("aaa");
-   
-// });
 
 
 
