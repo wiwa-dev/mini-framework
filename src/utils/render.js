@@ -25,7 +25,7 @@ export function Render(newTree, rootElement) {
         createElement('p', {}, 'Created by (yba,adiane,belhajd,sefaye) Team'),
         createElement('p', {},
             'Part of ',
-            createElement('a', { href: 'https://mini-framework-ten.vercel.app/' }, 'TodoMVC')
+            createElement('a', { href: 'http://todomvc.com' }, 'TodoMVC')
         )
     );
     rootElement.appendChild(footer.render())
